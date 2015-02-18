@@ -2,6 +2,7 @@ package gti310.tp2;
 
 import java.io.FileNotFoundException;
 
+import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
 import gti310.tp2.audio.ConcreteAudioFilter;
 import gti310.tp2.io.FileSink;
 import gti310.tp2.io.FileSource;
@@ -20,7 +21,15 @@ public class Application {
 		String newSoundFile = args[1];
 		int delai = Integer.parseInt(args[2]);
 		Float facteur = Float.parseFloat(args[3]);
+		
+		Details details = new Details();
+		details.Details(soundFile);
+		
+		System.out.println("required size :"+details.getRequiredSize());
+		System.out.println("buffred size :"+details.getBufferSize(delai));
+		details.getInfos();
 
+		
 		FileSource source = null;
 		try {
 			source = new FileSource(soundFile);
@@ -36,11 +45,17 @@ public class Application {
 			e.printStackTrace();
 		}
 
-		ConcreteAudioFilter filter = new ConcreteAudioFilter(delai,facteur);
+		ConcreteAudioFilter filter = new ConcreteAudioFilter(delai,facteur, details.getBufferSize(delai));
 
+		/*try {
+			System.out.println(""+source.getChannels());
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}*/
 		try {
 			while(true){
-				dest.push(filter.process(source.pop(4)));
+				dest.push(filter.process(source.pop(details.getRequiredSize()))); // mono 1oct / streo 2 oct / 8bit 1 oct / 16 bit 2oct 
 			}
 		} catch (Exception e) {
 			System.out.println("Fini");

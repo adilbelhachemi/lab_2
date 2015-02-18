@@ -1,21 +1,26 @@
 package gti310.tp2.audio;
 
+
+
 public class ConcreteAudioFilter implements AudioFilter{
 
 	byte[] buffer;
 	int pos=0;
 	private Float facteur;
 	private boolean echo = false;
+	private int bufferSize = 0;
 	
 	
 	
-	public ConcreteAudioFilter(int delai, Float facteur) {
-		determinerTaille();
+	public ConcreteAudioFilter(int delai, Float facteur, int bufferSize) {
+		//determinerTaille();
 		this.facteur = facteur;
+		this.bufferSize = bufferSize;
+		buffer = new byte[bufferSize];
 	}
 
 	public byte[] process(byte[] bs){
-		byte[] result = new byte[4];
+		byte[] result = new byte[bs.length];
 		//System.out.println(bs.length);
 		for (int i = 0; i < bs.length; i++) {
 			if(pos == buffer.length){
@@ -41,11 +46,6 @@ public class ConcreteAudioFilter implements AudioFilter{
 		// TODO Auto-generated method stub
 		
 	}
-	
-	void determinerTaille(){
-		buffer = new byte[176400];
-	}
-	
-	
+		
 	
 }

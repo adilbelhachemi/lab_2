@@ -5,6 +5,7 @@ import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.math.BigInteger;
 
 /**
  * A FileSource object opens a handle on a file and sends the data in
@@ -69,6 +70,7 @@ public class FileSource {
 				throw new Exception("Fini");				
 			}
 			
+			
 			/* return what was read */
 			return buffer;
 		} catch (IOException e) {
@@ -76,4 +78,42 @@ public class FileSource {
 			return null;
 		}
 	}
+	
+	
+/*	
+	private byte[] getBytes(int deca, int size)  throws Exception {
+		try {
+			 create a new byte array for the number of bytes asked 
+			byte[] buffer = new byte[size];
+			_reader.skip(deca);
+			 read the number of bytes asked for, or the amount left in the
+			 * file 
+			if (_reader.read(buffer) == -1){
+				throw new Exception("Fini");				
+			}
+			
+			
+			 return what was read 
+			return buffer;
+		} catch (IOException e) {
+			 something went wrong, or EOF reached 
+			return null;
+		}
+		
+	}
+	
+	
+	
+	public int getChannels() throws Exception{
+		
+		return new BigInteger(getBytes(0,3)).intValue();
+		
+	}*/
+	
+	
+	
+	
+	
+	
+	
 }
