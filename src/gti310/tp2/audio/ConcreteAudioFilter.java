@@ -8,6 +8,7 @@ public class ConcreteAudioFilter implements AudioFilter{
 	int pos=0;
 	private Float facteur;
 	private boolean echo = false;
+	private boolean header = false;
 	private int bufferSize = 0;
 	
 	
@@ -26,6 +27,10 @@ public class ConcreteAudioFilter implements AudioFilter{
 			if(pos == buffer.length){
 				pos = 0;
 				echo  = true;
+			} 
+			if(pos == 44 && !header){
+				pos = 0;
+				header  = true;
 			} 
 			if(echo){
 				result[i] = (byte) (bs[i] + facteur * buffer[pos]);

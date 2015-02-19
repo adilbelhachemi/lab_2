@@ -111,10 +111,6 @@ byte[] buffer = new byte[BUFFER_SIZE];
 			e.printStackTrace();
 		}
 
-		System.out.println(numChannels);
-		System.out.println(sampleRate);
-		System.out.println(blockAlign);
-		System.out.println(validBits);
 	}
 	
 	
@@ -135,13 +131,7 @@ byte[] buffer = new byte[BUFFER_SIZE];
 	}
 	
 	public int getBufferSize(int delai){
-		return (int) (sampleRate * getRequiredSize() * delai);
-		
-		/*if (validBits == 16) {
-			return (int) (sampleRate * numChannels * delai * 2);
-		}else{
-			return (int) (sampleRate * numChannels * delai * 1);
-		}	*/		
+		return (int) (sampleRate * getRequiredSize() * delai);	
 	}
 	
 	
