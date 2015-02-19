@@ -36,7 +36,12 @@ public class Details {
 
 			source = new DataInputStream(new BufferedInputStream(
 					new FileInputStream(soundFile)));
-
+/*  
+ * CODE EMPRUNTÉ :
+ * Les lignes suivant sont basées sur du code exemple provenant du site :
+ * http://www.labbookpages.co.uk/audio/javaWavFiles.html
+ * J'ai pris les méthodes openWave() et getLE() dans le Download Files "WavFile.tar.gz"
+ */
 			bytesRead = source.read(buffer, 0, 12);
 
 			long chunkSize = getLE(buffer, 4, 4);
@@ -72,7 +77,7 @@ public class Details {
 					source.skip(numChunkBytes);
 				}
 			}
-
+/* FIN DU PREMIER PARTIE DU CODE EMPRUNTÉ */
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -101,7 +106,12 @@ public class Details {
 	public int getBufferSize(int delai) {
 		return (int) (sampleRate * getRequiredSize() * delai);
 	}
-
+/*  
+ * CODE EMPRUNTÉ :
+ * Les lignes suivant sont basées sur du code exemple provenant du site :
+ * http://www.labbookpages.co.uk/audio/javaWavFiles.html
+ * J'ai pris les méthodes openWave() et getLE() dans le Download Files "WavFile.tar.gz"
+ */
 	private static long getLE(byte[] buffer, int pos, int numBytes) {
 		numBytes--;
 		pos += numBytes;
@@ -112,6 +122,7 @@ public class Details {
 
 		return val;
 	}
+/* FIN DU PREMIER PARTIE DU CODE EMPRUNTÉ */
 
 	public void getInfos() {
 		System.out.println("numChannels :" + numChannels);
