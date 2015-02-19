@@ -22,11 +22,9 @@ public class Details {
 	long sampleRate = 0;
 	int blockAlign = 0; 
 	int validBits = 0;
-	
-	// Buffering
-	// Local buffer used for IO
-	int bufferPointer; // Points to the current position in local buffer
-	int bytesRead; // Bytes read after last read into local buffer
+
+	int bufferPointer; 
+	int bytesRead;
 	long frameCounter;
 
 	public void audioDetails(String soundFile) {
@@ -46,7 +44,7 @@ public class Details {
 
 			long chunkSize = getLE(buffer, 4, 4);
 
-			// Search for the Format and Data Chunks
+			// Cherche pour le Format et le Data Chunks
 			while (true) {
 				bytesRead = source.read(buffer, 0, 8);
 				long chunkID = getLE(buffer, 0, 4);
@@ -57,22 +55,24 @@ public class Details {
 
 				if (chunkID == FMT_CHUNK_ID) {
 
-					// Read in the header info
+					// Lit les informations de l'entête
 					bytesRead = source.read(buffer, 0, 16);
 
-					// Extract the format information
+					// Extrait les informations du format du fichier audio
 					numChannels = (int) getLE(buffer, 2, 2);
 					sampleRate = getLE(buffer, 4, 4);
 					blockAlign = (int) getLE(buffer, 12, 2);
 					validBits = (int) getLE(buffer, 14, 2);
 
-					// Account for number of format bytes and then skip over
-					// any extra format bytes
+					// Garde le nombre de bytes du format et laisse tomber les bytes 
+					// extra du format du fichier audio
 					numChunkBytes -= 16;
 					if (numChunkBytes > 0)
 						source.skip(numChunkBytes);
+				// Si ce n'est pas le chunk de format, arrête
 				} else if (chunkID == DATA_CHUNK_ID) {
 					break;
+				// Sinon, skip le chunk
 				} else {
 					source.skip(numChunkBytes);
 				}
@@ -112,6 +112,7 @@ public class Details {
  * http://www.labbookpages.co.uk/audio/javaWavFiles.html
  * J'ai pris les méthodes openWave() et getLE() dans le Download Files "WavFile.tar.gz"
  */
+ 	// accesseur du endian data du buffer local
 	private static long getLE(byte[] buffer, int pos, int numBytes) {
 		numBytes--;
 		pos += numBytes;
