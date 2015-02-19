@@ -11,26 +11,26 @@ public class Application {
 
 	/**
 	 * Launch the application
-	 * @param args This parameter is ignored
+	 * 
+	 * @param args
+	 *            This parameter is ignored
 	 */
-	
+
 	public static void main(String args[]) {
 		System.out.println("Audio Resample project!");
-
 
 		String soundFile = args[0];
 		String newSoundFile = args[1];
 		int delai = Integer.parseInt(args[2]);
 		Float facteur = Float.parseFloat(args[3]);
-		
+
 		Details details = new Details();
-		details.Details(soundFile);
-		
-		System.out.println("required size :"+details.getRequiredSize());
-		System.out.println("buffred size :"+details.getBufferSize(delai));
+		details.audioDetails(soundFile);
+
+		System.out.println("required size :" + details.getRequiredSize());
+		System.out.println("buffred size :" + details.getBufferSize(delai));
 		details.getInfos();
 
-		
 		FileSource source = null;
 		try {
 			source = new FileSource(soundFile);
@@ -46,24 +46,20 @@ public class Application {
 			e.printStackTrace();
 		}
 
-		ConcreteAudioFilter filter = new ConcreteAudioFilter(delai,facteur, details.getBufferSize(delai));
+		ConcreteAudioFilter filter = new ConcreteAudioFilter(delai, facteur,
+				details.getBufferSize(delai));
 
-		/*try {
-			System.out.println(""+source.getChannels());
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}*/
+		/*
+		 * try { System.out.println(""+source.getChannels()); } catch (Exception
+		 * e1) { // TODO Auto-generated catch block e1.printStackTrace(); }
+		 */
 		try {
-			while(true){
+			while (true) {
 				dest.push(filter.process(source.pop(details.getRequiredSize()))); // mono 1oct / streo 2 oct / 8bit 1 oct / 16 bit 2oct 
 			}
 		} catch (Exception e) {
 			System.out.println("Fini");
-		}	
+		}
 	}
 
-
-
 }
-
